@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered Answer Sheet Evaluation System</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/static/index.html">
+                <img src="/static/images/logo.jpg" alt="DY Patil Logo" height="40" class="me-2">
+                Answer Sheet Evaluation
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/static/index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/static/upload.html">Evaluate</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/static/about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/static/contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero" style="background-image: url('/static/images/dypiu_home_page_bg.jpg'); background-size: cover; background-position: center;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="hero-content animate__animated animate__fadeInLeft">
+                        <h1>AI-Powered Answer Sheet Evaluation System</h1>
+                        <p class="lead">Automatically evaluate student answer sheets with advanced NLP and machine learning techniques.</p>
+                        <div class="mt-4">
+                            <a href="/static/upload.html" class="btn btn-primary btn-lg animate__animated animate__pulse animate__infinite animate__slower">Start Evaluation</a>
+                            <a href="#how-it-works" class="btn btn-outline-light btn-lg ms-2">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="how-it-works" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5 section-title">How It Works</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 feature-card animate__animated animate__fadeInUp" data-delay="100">
+                        <div class="card-body text-center">
+                            <div class="icon-wrapper mb-3">
+                                <i class="fas fa-upload fa-3x"></i>
+                            </div>
+                            <h4>Upload</h4>
+                            <p>Upload reference answer sheet and multiple student answer sheets in PDF format.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 feature-card animate__animated animate__fadeInUp" data-delay="300">
+                        <div class="card-body text-center">
+                            <div class="icon-wrapper mb-3">
+                                <i class="fas fa-brain fa-3x"></i>
+                            </div>
+                            <h4>Process</h4>
+                            <p>Our AI analyzes the answers using semantic similarity, text structure, and readability metrics.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 feature-card animate__animated animate__fadeInUp" data-delay="500">
+                        <div class="card-body text-center">
+                            <div class="icon-wrapper mb-3">
+                                <i class="fas fa-chart-bar fa-3x"></i>
+                            </div>
+                            <h4>Results</h4>
+                            <p>Get detailed scores, feedback, and comparative analysis for each student.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5 section-title">Key Features</h2>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="feature-item d-flex animate__animated animate__fadeInRight">
+                        <div class="feature-icon me-3">
+                            <i class="fas fa-tachometer-alt"></i>
+                        </div>
+                        <div>
+                            <h4>Automated Evaluation</h4>
+                            <p>Save hours of manual grading with our advanced AI-powered evaluation system.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="feature-item d-flex animate__animated animate__fadeInLeft">
+                        <div class="feature-icon me-3">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <div>
+                            <h4>Detailed Feedback</h4>
+                            <p>Provide students with specific feedback on their answers to improve learning outcomes.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="feature-item d-flex animate__animated animate__fadeInRight" data-delay="200">
+                        <div class="feature-icon me-3">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div>
+                            <h4>Batch Processing</h4>
+                            <p>Evaluate multiple student answer sheets simultaneously for efficient grading.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="feature-item d-flex animate__animated animate__fadeInLeft" data-delay="200">
+                        <div class="feature-icon me-3">
+                            <i class="fas fa-file-download"></i>
+                        </div>
+                        <div>
+                            <h4>Exportable Reports</h4>
+                            <p>Download evaluation reports for individual students or the entire class.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5 bg-primary text-white text-center">
+        <div class="container">
+            <h2 class="mb-4 animate__animated animate__fadeIn">Ready to Get Started?</h2>
+            <p class="lead mb-4 animate__animated animate__fadeIn" data-delay="200">Experience the power of AI-driven answer sheet evaluation today.</p>
+            <a href="/static/upload.html" class="btn btn-light btn-lg animate__animated animate__heartBeat animate__infinite animate__slower">Start Evaluating Now</a>
+        </div>
+    </section>
+
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p>&copy; 2025 D Y Patil International University</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="text-white me-3">Privacy Policy</a>
+                    <a href="#" class="text-white">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/js/main.js"></script>
+</body>
+</html>

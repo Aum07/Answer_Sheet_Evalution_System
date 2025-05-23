@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - AI Evaluation System</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/static/index.html">
+                <img src="/static/images/logo.jpg" alt="DY Patil Logo" height="40" class="me-2">
+                Answer Sheet Evaluation
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/static/index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/static/upload.html">Evaluate</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/static/about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/static/contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-5">
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="mb-4 animate__animated animate__fadeIn">About Our Project</h1>
+                <p class="lead mb-4 animate__animated animate__fadeIn animate__delay-1s">The Answer Sheet Evaluation System is a final year project developed at D Y Patil International University that uses advanced Natural Language Processing and Machine Learning techniques to automate the evaluation of written answers.</p>
+            </div>
+        </div>
+
+        <div class="row mb-5">
+            <div class="col-md-6 animate__animated animate__fadeInLeft animate__delay-2s">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h3 class="card-title mb-4">Project Overview</h3>
+                        <p>This system was developed to address the time-consuming and subjective nature of manual answer sheet evaluation. By leveraging state-of-the-art NLP techniques, our system can:</p>
+                        <ul>
+                            <li class="animate-list-item">Process multiple answer sheets simultaneously</li>
+                            <li class="animate-list-item">Compare student answers with reference solutions</li>
+                            <li class="animate-list-item">Evaluate based on semantic similarity, not just keyword matching</li>
+                            <li class="animate-list-item">Consider factors like readability, coherence, and structure</li>
+                            <li class="animate-list-item">Generate detailed feedback for each answer</li>
+                            <li class="animate-list-item">Provide consistent scoring across all evaluations</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 animate__animated animate__fadeInRight animate__delay-2s">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h3 class="card-title mb-4">Technology Stack</h3>
+                        <div class="row">
+                            <div class="col-6">
+                                <h5><i class="fas fa-brain text-primary me-2"></i>AI & ML</h5>
+                                <ul>
+                                    <li class="animate-list-item">Sentence Transformers</li>
+                                    <li class="animate-list-item">Gradient Boosting Models</li>
+                                    <li class="animate-list-item">Natural Language Processing</li>
+                                    <li class="animate-list-item">Text Feature Extraction</li>
+                                </ul>
+                            </div>
+                            <div class="col-6">
+                                <h5><i class="fas fa-code text-primary me-2"></i>Backend</h5>
+                                <ul>
+                                    <li class="animate-list-item">FastAPI</li>
+                                    <li class="animate-list-item">Python</li>
+                                    <li class="animate-list-item">PDF Processing</li>
+                                    <li class="animate-list-item">RESTful API Design</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-6">
+                                <h5><i class="fas fa-laptop-code text-primary me-2"></i>Frontend</h5>
+                                <ul>
+                                    <li class="animate-list-item">HTML5 & CSS3</li>
+                                    <li class="animate-list-item">JavaScript</li>
+                                    <li class="animate-list-item">Bootstrap 5</li>
+                                    <li class="animate-list-item">Chart.js</li>
+                                </ul>
+                            </div>
+                            <div class="col-6">
+                                <h5><i class="fas fa-database text-primary me-2"></i>Data</h5>
+                                <ul>
+                                    <li class="animate-list-item">JSON Data Structure</li>
+                                    <li class="animate-list-item">PDF Text Extraction</li>
+                                    <li class="animate-list-item">Data Visualization</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-5">
+            <div class="col-12 animate__animated animate__fadeInUp animate__delay-3s">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h3 class="card-title mb-4">How The System Works</h3>
+                        <div class="row align-items-center">
+                            <div class="col-md-12">
+                                <div class="process-flow">
+                                    <div class="process-step">
+                                        <div class="step-number">1</div>
+                                        <div class="step-content">
+                                            <h5>PDF Upload & Text Extraction</h5>
+                                            <p>The system accepts reference and student answer PDFs, extracting text using OCR when needed.</p>
+                                        </div>
+                                    </div>
+                                    <div class="process-step">
+                                        <div class="step-number">2</div>
+                                        <div class="step-content">
+                                            <h5>Question-Answer Parsing</h5>
+                                            <p>Text is parsed to identify questions and corresponding answers from both reference and student sheets.</p>
+                                        </div>
+                                    </div>
+                                    <div class="process-step">
+                                        <div class="step-number">3</div>
+                                        <div class="step-content">
+                                            <h5>Feature Extraction</h5>
+                                            <p>The system extracts semantic similarity, part-of-speech features, readability metrics, and more.</p>
+                                        </div>
+                                    </div>
+                                    <div class="process-step">
+                                        <div class="step-number">4</div>
+                                        <div class="step-content">
+                                            <h5>Score Prediction</h5>
+                                            <p>A trained machine learning model predicts scores based on extracted features.</p>
+                                        </div>
+                                    </div>
+                                    <div class="process-step">
+                                        <div class="step-number">5</div>
+                                        <div class="step-content">
+                                            <h5>Feedback Generation</h5>
+                                            <p>The system generates personalized feedback based on the evaluation results.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 text-center animate__animated animate__fadeIn animate__delay-4s">
+                <h3 class="mb-4">Project Team</h3>
+                <div class="row justify-content-center">
+                    <div class="col-md-4 mb-4">
+                        <div class="card team-card shadow-sm">
+                            <div class="card-body text-center">
+                                <div class="team-avatar mb-3">
+                                    <i class="fas fa-user-circle fa-5x text-primary"></i>
+                                </div>
+                                <h5 class="card-title">Your Name</h5>
+                                <p class="card-text text-muted">Project Lead & Developer</p>
+                                <p class="card-text">Final Year Student<br>Computer Science Department<br>D Y Patil International University</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card team-card shadow-sm">
+                            <div class="card-body text-center">
+                                <div class="team-avatar mb-3">
+                                    <i class="fas fa-user-circle fa-5x text-primary"></i>
+                                </div>
+                                <h5 class="card-title">Project Guide</h5>
+                                <p class="card-text text-muted">Faculty Advisor</p>
+                                <p class="card-text">Professor<br>Computer Science Department<br>D Y Patil International University</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p>&copy; 2025 D Y Patil International University</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="text-white me-3">Privacy Policy</a>
+                    <a href="#" class="text-white">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/js/main.js"></script>
+</body>
+</html>

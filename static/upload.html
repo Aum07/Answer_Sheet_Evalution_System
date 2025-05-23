@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Answer Sheets - AI Evaluation System</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/static/index.html">
+                <img src="/static/images/logo.jpg" alt="DY Patil Logo" height="40" class="me-2">
+                Answer Sheet Evaluation
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/static/index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/static/upload.html">Evaluate</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/static/about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/static/contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-5">
+        <div class="row mb-5">
+            <div class="col-md-6 animate__animated animate__fadeInLeft">
+                <h1 class="mb-4">Upload Answer Sheets</h1>
+                <p class="lead">Our AI-powered system will evaluate student answers against reference solutions, providing detailed feedback and scores.</p>
+                <div class="upload-illustration mt-4">
+                    <div class="document-animation">
+                        <div class="document">
+                            <div class="document-line"></div>
+                            <div class="document-line"></div>
+                            <div class="document-line"></div>
+                            <div class="document-line"></div>
+                        </div>
+                        <div class="document-check">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 animate__animated animate__fadeInRight">
+                <div class="card shadow-lg">
+                    <div class="card-body p-4">
+                        <h5 class="card-title mb-4">Upload Files</h5>
+                        
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Reference Answer Sheet</label>
+                            <div id="referenceDropzone" class="dropzone"></div>
+                            <small class="text-muted">Upload one reference answer sheet in PDF format</small>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Student Answer Sheets</label>
+                            <div id="studentDropzone" class="dropzone"></div>
+                            <small class="text-muted">Upload one or more student answer sheets in PDF format</small>
+                        </div>
+                        
+                        <button id="submitBtn" class="btn btn-primary btn-lg w-100 mt-3" disabled>
+                            <i class="fas fa-check-circle me-2"></i>Evaluate Answer Sheets
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4 animate__animated animate__fadeInUp animate__delay-1s">
+            <div class="card-header bg-light">
+                <h5 class="mb-0">Instructions</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6><i class="fas fa-file-pdf me-2 text-danger"></i>File Requirements</h6>
+                        <ul>
+                            <li>All files must be in PDF format</li>
+                            <li>Reference answer sheet should contain model answers</li>
+                            <li>Student answer sheets should follow the same format</li>
+                            <li>Maximum file size: 10MB per file</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6><i class="fas fa-lightbulb me-2 text-warning"></i>Tips for Best Results</h6>
+                        <ul>
+                            <li>Ensure PDFs have clear, readable text</li>
+                            <li>Name student files with their names for easier identification</li>
+                            <li>Each PDF should contain questions and answers in the format: "Question X: [question text] Answer: [answer text]"</li>
+                            <li>For handwritten answers, ensure the scan quality is high</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="processingModal" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center p-5">
+                    <div class="spinner-grow text-primary mb-4" role="status" style="width: 3rem; height: 3rem;">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <h5>Processing Answer Sheets</h5>
+                    <p class="mb-0">This may take a few moments depending on the number of files...</p>
+                    <div class="progress mt-4">
+                        <div id="progressBar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="errorModal" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title"><i class="fas fa-exclamation-circle me-2"></i>Error</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="errorMessage"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p>&copy; 2025 D Y Patil International University</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="text-white me-3">Privacy Policy</a>
+                    <a href="#" class="text-white">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.js"></script>
+    <script src="/static/js/upload.js"></script>
+</body>
+</html>
