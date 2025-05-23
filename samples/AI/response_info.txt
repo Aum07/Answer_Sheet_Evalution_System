@@ -1,0 +1,9 @@
+the response.json contains out for the 
+http://127.0.0.1:8000/evaluate/
+
+
+and response for health simply shows if all model exist or is running properly
+
+two more routes
+1. for downloading single student report (pdf) : not implemented yet
+2. for downloading all student report (zip- pdfs) : not implemented yet
