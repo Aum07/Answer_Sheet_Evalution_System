@@ -3,11 +3,9 @@ fitz==0.0.1.dev2
 nltk==3.9.1
 numpy==2.2.6
 pandas==2.0.3
-Pillow==10.0.0
 Pillow==11.2.1
 pydantic==1.10.11
 PyMuPDF==1.22.5
-pytesseract==0.3.10
 pytesseract==0.3.13
 reportlab==4.4.1
 scikit_learn==1.4.0
