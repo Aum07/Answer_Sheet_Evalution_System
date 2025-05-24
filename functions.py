@@ -1,6 +1,6 @@
 import pandas as pd
 import re
-import fitz  # PyMuPDF
+import fitz # PyMuPDF
 import pytesseract
 from PIL import Image
 import io
@@ -16,6 +16,13 @@ import pickle
 import logging
 from typing import Dict, List, Optional, Tuple
 from functools import lru_cache
+from reportlab.lib.pagesizes import letter, A4
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.lib.units import inch
+from reportlab.lib import colors
+from datetime import datetime
+import zipfile
 
 # Configure logging
 logging.basicConfig(
@@ -46,19 +53,15 @@ def extract_text_from_pdf(pdf_path: str) -> str:
     try:
         doc = fitz.open(pdf_path)
         full_text = ""
-        
         for page_num, page in enumerate(doc):
             text = page.get_text()
-            
             # If page has no text, apply OCR
             if not text.strip():
                 logger.info(f"Using OCR for page {page_num+1} in {os.path.basename(pdf_path)}")
                 pix = page.get_pixmap()
                 img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
                 text = pytesseract.image_to_string(img)
-            
             full_text += text + "\n"
-        
         return full_text.strip()
     except Exception as e:
         logger.error(f"Error extracting text from PDF: {str(e)}")
@@ -105,7 +108,6 @@ def create_comparison_dataframe(reference_df: pd.DataFrame, student_df: pd.DataF
         return pd.DataFrame(columns=['ID', 'Question', 'Reference Answer', 'Student Answer'])
     
     results = []
-    
     for _, ref_row in reference_df.iterrows():
         ref_id = ref_row['ID']
         ref_question = ref_row['Question']
@@ -113,14 +115,12 @@ def create_comparison_dataframe(reference_df: pd.DataFrame, student_df: pd.DataF
         
         # Try to find matching question by ID
         student_row = student_df[student_df['ID'] == ref_id]
-        
         if not student_row.empty:
             student_answer = student_row['Answer'].values[0]
         else:
             # Try to find a matching question by similarity
             best_match = None
             best_score = 0
-            
             for _, stu_row in student_df.iterrows():
                 score = string_similarity(ref_question, stu_row['Question'])
                 if score > best_score:
@@ -154,7 +154,6 @@ def get_pos_features(text: str) -> Dict[str, float]:
             pos_counts[tag] = pos_counts.get(tag, 0) + 1
         
         total_words = len(tokens)
-        
         if total_words == 0:
             return {
                 'noun_ratio': 0,
@@ -176,6 +175,7 @@ def get_pos_features(text: str) -> Dict[str, float]:
                          pos_counts.get('RBS', 0)) / total_words,
             'pos_diversity': len(pos_counts) / total_words
         }
+    
     except Exception as e:
         logger.error(f"Error calculating POS features: {str(e)}")
         return {
@@ -197,6 +197,7 @@ def get_readability_scores(reference_answer: str, student_answer: str) -> Dict[s
             return {"flesch_kincaid_ratio": 0}
         
         return {"flesch_kincaid_ratio": student_fk / ref_fk}
+    
     except Exception as e:
         logger.error(f"Error calculating readability scores: {str(e)}")
         return {"flesch_kincaid_ratio": 0}
@@ -222,8 +223,8 @@ def process_answer_sheet_data(df: pd.DataFrame) -> pd.DataFrame:
     
     # Calculate length ratio
     df['Length Ratio'] = df.apply(
-        lambda row: len(row['Student Answer']) / len(row['Reference Answer']) 
-        if len(row['Reference Answer']) > 0 else 0, 
+        lambda row: len(row['Student Answer']) / len(row['Reference Answer'])
+        if len(row['Reference Answer']) > 0 else 0,
         axis=1
     )
     
@@ -237,10 +238,9 @@ def process_answer_sheet_data(df: pd.DataFrame) -> pd.DataFrame:
     df['Reference_POS_Features'] = df['Reference Answer'].apply(get_pos_features)
     
     pos_features = ['noun_ratio', 'verb_ratio', 'adj_ratio', 'adv_ratio', 'pos_diversity']
-    
     for feature in pos_features:
         df[f'POS_{feature}_diff'] = (
-            df['Student_POS_Features'].apply(lambda x: x[feature]) - 
+            df['Student_POS_Features'].apply(lambda x: x[feature]) -
             df['Reference_POS_Features'].apply(lambda x: x[feature])
         )
     
@@ -249,7 +249,7 @@ def process_answer_sheet_data(df: pd.DataFrame) -> pd.DataFrame:
     
     # Calculate readability ratio
     df["flesch_kincaid_ratio"] = df.apply(
-        lambda row: get_readability_scores(row["Reference Answer"], row["Student Answer"])["flesch_kincaid_ratio"], 
+        lambda row: get_readability_scores(row["Reference Answer"], row["Student Answer"])["flesch_kincaid_ratio"],
         axis=1
     )
     
@@ -278,6 +278,7 @@ def predict_score(new_data: pd.DataFrame, model_path: str, scaler_path: str) -> 
         predictions = model.predict(X_scaled)
         
         return np.clip(np.round(predictions), 0, 10).astype(int)
+    
     except Exception as e:
         logger.error(f"Error predicting scores: {str(e)}")
         raise ValueError(f"Failed to predict scores: {str(e)}")
@@ -306,8 +307,178 @@ def main(reference_pdf_path: str, student_pdf_path: str, model_path: str, scaler
     
     logger.info("Predicting scores")
     scores = predict_score(processed_df, model_path, scaler_path)
-    
     processed_df['Predicted Score'] = scores
     
     logger.info(f"Evaluation complete. Processed {len(processed_df)} questions.")
     return processed_df
+
+def generate_pdf_report(student_data: Dict, request_id: str) -> str:
+    """Generate a PDF report for a single student evaluation."""
+    try:
+        # Create temp file for PDF
+        pdf_path = f"temp/report_{request_id}_{student_data['student_name'].replace(' ', '_')}.pdf"
+        
+        # Create PDF document
+        doc = SimpleDocTemplate(pdf_path, pagesize=A4)
+        story = []
+        
+        # Get styles
+        styles = getSampleStyleSheet()
+        title_style = ParagraphStyle(
+            'CustomTitle',
+            parent=styles['Heading1'],
+            fontSize=18,
+            spaceAfter=30,
+            alignment=1  # Center alignment
+        )
+        
+        # Title
+        title = Paragraph("Answer Sheet Evaluation Report", title_style)
+        story.append(title)
+        story.append(Spacer(1, 12))
+        
+        # Student Information
+        student_info = [
+            ["Student Name:", student_data["student_name"]],
+            ["Total Score:", f"{student_data['total_score']} out of {student_data['max_possible_score']}"],
+            ["Percentage:", f"{student_data['percentage']}%"],
+            ["Date:", datetime.now().strftime("%Y-%m-%d %H:%M:%S")]
+        ]
+        
+        info_table = Table(student_info, colWidths=[2*inch, 4*inch])
+        info_table.setStyle(TableStyle([
+            ('BACKGROUND', (0, 0), (0, -1), colors.lightgrey),
+            ('TEXTCOLOR', (0, 0), (-1, -1), colors.black),
+            ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+            ('FONTNAME', (0, 0), (-1, -1), 'Helvetica'),
+            ('FONTSIZE', (0, 0), (-1, -1), 10),
+            ('BOTTOMPADDING', (0, 0), (-1, -1), 12),
+            ('BACKGROUND', (1, 0), (1, -1), colors.beige),
+            ('GRID', (0, 0), (-1, -1), 1, colors.black)
+        ]))
+        
+        story.append(info_table)
+        story.append(Spacer(1, 20))
+        
+        # Question-wise breakdown
+        story.append(Paragraph("Question-wise Breakdown", styles['Heading2']))
+        story.append(Spacer(1, 12))
+        
+        for idx, result in enumerate(student_data["results"], 1):
+            # Question header
+            question_text = f"Question {idx}: {result['Question']}"
+            story.append(Paragraph(question_text, styles['Heading3']))
+            story.append(Spacer(1, 6))
+            
+            # Student Answer (FULL TEXT - NO TRUNCATION)
+            story.append(Paragraph("<b>Student Answer:</b>", styles['Normal']))
+            story.append(Spacer(1, 3))
+            
+            # Use Paragraph for proper text wrapping of long answers
+            answer_text = result["Student_Answer"] if result["Student_Answer"] else "No answer provided"
+            answer_para = Paragraph(answer_text, styles['Normal'])
+            story.append(answer_para)
+            story.append(Spacer(1, 10))
+            
+            # Score and Feedback table
+            score_feedback_data = [
+                ["Score:", f"{result['Predicted_Score']}/10"],
+                ["Feedback:", result["Feedback"]]
+            ]
+            
+            score_table = Table(score_feedback_data, colWidths=[1.5*inch, 4.5*inch])
+            score_table.setStyle(TableStyle([
+                ('BACKGROUND', (0, 0), (0, -1), colors.lightblue),
+                ('TEXTCOLOR', (0, 0), (-1, -1), colors.black),
+                ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+                ('FONTNAME', (0, 0), (-1, -1), 'Helvetica'),
+                ('FONTSIZE', (0, 0), (-1, -1), 9),
+                ('BOTTOMPADDING', (0, 0), (-1, -1), 8),
+                ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+                ('GRID', (0, 0), (-1, -1), 1, colors.black)
+            ]))
+            
+            story.append(score_table)
+            story.append(Spacer(1, 20))
+        
+        # Build PDF
+        doc.build(story)
+        logger.info(f"Generated PDF report for {student_data['student_name']}")
+        return pdf_path
+        
+    except Exception as e:
+        logger.error(f"Error generating PDF report: {str(e)}")
+        raise ValueError(f"Failed to generate PDF report: {str(e)}")
+
+
+def generate_zip_reports(evaluations: List[Dict], request_id: str) -> str:
+    """Generate a ZIP file containing PDF reports for all students."""
+    try:
+        zip_path = f"temp/reports_{request_id}.zip"
+        
+        with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as zip_file:
+            for evaluation in evaluations:
+                # Generate PDF for each student
+                pdf_path = generate_pdf_report(evaluation, request_id)
+                
+                # Add PDF to ZIP
+                safe_name = evaluation["student_name"].replace(" ", "_")
+                zip_filename = f"{safe_name}_evaluation_report.pdf"
+                zip_file.write(pdf_path, zip_filename)
+                
+                # Clean up individual PDF
+                if os.path.exists(pdf_path):
+                    os.unlink(pdf_path)
+            
+            # Add summary report
+            summary_data = generate_summary_report(evaluations)
+            zip_file.writestr("class_summary.txt", summary_data)
+        
+        logger.info(f"Generated ZIP file with {len(evaluations)} reports")
+        return zip_path
+        
+    except Exception as e:
+        logger.error(f"Error generating ZIP reports: {str(e)}")
+        raise ValueError(f"Failed to generate ZIP reports: {str(e)}")
+
+def generate_summary_report(evaluations: List[Dict]) -> str:
+    """Generate a text summary of all evaluations."""
+    try:
+        summary_lines = []
+        summary_lines.append("CLASS EVALUATION SUMMARY REPORT")
+        summary_lines.append("=" * 50)
+        summary_lines.append(f"Generated on: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        summary_lines.append(f"Total Students: {len(evaluations)}")
+        summary_lines.append("")
+        
+        # Calculate statistics
+        scores = [eval_data["percentage"] for eval_data in evaluations]
+        avg_score = sum(scores) / len(scores) if scores else 0
+        highest_score = max(scores) if scores else 0
+        lowest_score = min(scores) if scores else 0
+        
+        summary_lines.append("CLASS STATISTICS:")
+        summary_lines.append(f"Average Score: {avg_score:.2f}%")
+        summary_lines.append(f"Highest Score: {highest_score:.2f}%")
+        summary_lines.append(f"Lowest Score: {lowest_score:.2f}%")
+        summary_lines.append("")
+        
+        # Individual student results
+        summary_lines.append("INDIVIDUAL RESULTS:")
+        summary_lines.append("-" * 30)
+        
+        # Sort by percentage (highest first)
+        sorted_evaluations = sorted(evaluations, key=lambda x: x["percentage"], reverse=True)
+        
+        for idx, evaluation in enumerate(sorted_evaluations, 1):
+            summary_lines.append(f"{idx:2d}. {evaluation['student_name']:<20} - {evaluation['percentage']:6.2f}% ({evaluation['total_score']}/{evaluation['max_possible_score']})")
+        
+        summary_lines.append("")
+        summary_lines.append("=" * 50)
+        summary_lines.append("End of Report")
+        
+        return "\n".join(summary_lines)
+        
+    except Exception as e:
+        logger.error(f"Error generating summary report: {str(e)}")
+        return "Error generating summary report"
