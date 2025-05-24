@@ -477,7 +477,7 @@ try:
 except RuntimeError:
     logger.warning("Static files directory not found, skipping static file serving")
 
-if __name__ == "__main__":
-    import uvicorn
-    logger.info("Starting Answer Sheet Evaluation API")
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+# if __name__ == "__main__":
+#     import uvicorn
+#     logger.info("Starting Answer Sheet Evaluation API")
+#     uvicorn.run(app, host="0.0.0.0", port=8000)
