@@ -41,7 +41,7 @@
 
     <div class="container py-5">
         <div class="row mb-5">
-            <div class="col-md-6 animate__animated animate__fadeInLeft">
+            <div class="col-md-4 animate__animated animate__fadeInLeft">
                 <h1 class="mb-4">Upload Answer Sheets</h1>
                 <p class="lead">Our AI-powered system will evaluate student answers against reference solutions, providing detailed feedback and scores.</p>
                 <div class="upload-illustration mt-4">
@@ -57,8 +57,35 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Instructions Section - Moved here beside upload sections -->
+                <div class="card mt-4 animate__animated animate__fadeInUp animate__delay-1s">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0">Instructions</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <h6><i class="fas fa-file-pdf me-2 text-danger"></i>File Requirements</h6>
+                            <ul class="small">
+                                <li>All files must be in PDF format</li>
+                                <li>Reference answer sheet should contain model answers</li>
+                                <li>Student answer sheets should follow the same format</li>
+                                <li>Maximum file size: 10MB per file</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h6><i class="fas fa-lightbulb me-2 text-warning"></i>Tips for Best Results</h6>
+                            <ul class="small">
+                                <li>Ensure PDFs have clear, readable text</li>
+                                <li>Name student files with their names for easier identification</li>
+                                <li>Each PDF should contain questions and answers in the format: "Question X: [question text] Answer: [answer text]"</li>
+                                <li>For handwritten answers, ensure the scan quality is high</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-6 animate__animated animate__fadeInRight">
+            <div class="col-md-8 animate__animated animate__fadeInRight">
                 <div class="card shadow-lg">
                     <div class="card-body p-4">
                         <h5 class="card-title mb-4">Upload Files</h5>
@@ -78,34 +105,6 @@
                         <button id="submitBtn" class="btn btn-primary btn-lg w-100 mt-3" disabled>
                             <i class="fas fa-check-circle me-2"></i>Evaluate Answer Sheets
                         </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="card mb-4 animate__animated animate__fadeInUp animate__delay-1s">
-            <div class="card-header bg-light">
-                <h5 class="mb-0">Instructions</h5>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-6">
-                        <h6><i class="fas fa-file-pdf me-2 text-danger"></i>File Requirements</h6>
-                        <ul>
-                            <li>All files must be in PDF format</li>
-                            <li>Reference answer sheet should contain model answers</li>
-                            <li>Student answer sheets should follow the same format</li>
-                            <li>Maximum file size: 10MB per file</li>
-                        </ul>
-                    </div>
-                    <div class="col-md-6">
-                        <h6><i class="fas fa-lightbulb me-2 text-warning"></i>Tips for Best Results</h6>
-                        <ul>
-                            <li>Ensure PDFs have clear, readable text</li>
-                            <li>Name student files with their names for easier identification</li>
-                            <li>Each PDF should contain questions and answers in the format: "Question X: [question text] Answer: [answer text]"</li>
-                            <li>For handwritten answers, ensure the scan quality is high</li>
-                        </ul>
                     </div>
                 </div>
             </div>

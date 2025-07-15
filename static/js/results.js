@@ -11,9 +11,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Store the request ID for downloading reports
     const requestId = resultsData.request_id;
     
-    // Animate counters
-    animateCounters();
-    
     // Populate summary view
     populateSummaryView(resultsData);
     
@@ -31,7 +28,6 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('backToSummary').addEventListener('click', function() {
         document.getElementById('detailView').style.display = 'none';
         document.getElementById('summaryView').style.display = 'block';
-        document.getElementById('summaryView').classList.add('animate__animated', 'animate__fadeIn');
     });
     
     // Handle "Download All" button click
@@ -44,33 +40,6 @@ document.addEventListener('DOMContentLoaded', function() {
         exportToCSV(resultsData);
     });
 });
-
-function animateCounters() {
-    document.querySelectorAll('.counter').forEach(counter => {
-        const target = parseFloat(counter.innerText);
-        const suffix = counter.innerText.includes('%') ? '%' : '';
-        const decimalPlaces = counter.innerText.includes('.') ? 
-            counter.innerText.split('.')[1].replace(/%/g, '').length : 0;
-        
-        let start = 0;
-        const duration = 1500;
-        const increment = target / (duration / 16);
-        
-        counter.innerText = '0' + suffix;
-        
-        const updateCounter = () => {
-            start += increment;
-            if (start < target) {
-                counter.innerText = start.toFixed(decimalPlaces) + suffix;
-                requestAnimationFrame(updateCounter);
-            } else {
-                counter.innerText = target.toFixed(decimalPlaces) + suffix;
-            }
-        };
-        
-        requestAnimationFrame(updateCounter);
-    });
-}
 
 function populateSummaryView(data) {
     const evaluations = data.evaluations;
@@ -153,11 +122,10 @@ function getScoreColorClass(score) {
 }
 
 function showStudentDetails(student, index, requestId) {
-    // Hide summary view and show detail view with animation
+    // Hide summary view and show detail view
     document.getElementById('summaryView').style.display = 'none';
     const detailView = document.getElementById('detailView');
     detailView.style.display = 'block';
-    detailView.classList.add('animate__animated', 'animate__fadeIn');
     
     // Update student details
     document.getElementById('studentDetailName').textContent = student.student_name;
@@ -181,8 +149,7 @@ function showStudentDetails(student, index, requestId) {
         const scoreClass = getScoreColorClass(result.Predicted_Score * 10);
         
         const questionCard = document.createElement('div');
-        questionCard.className = 'card mb-3 shadow-sm animate__animated animate__fadeIn';
-        questionCard.style.animationDelay = `${qIndex * 0.1}s`;
+        questionCard.className = 'card mb-3 shadow-sm';
         
         questionCard.innerHTML = `
             <div class="card-header d-flex justify-content-between align-items-center bg-light">
@@ -212,9 +179,6 @@ function showStudentDetails(student, index, requestId) {
         
         questionsContainer.appendChild(questionCard);
     });
-    
-    // Animate counters in detail view
-    animateCounters();
 }
 
 function createScoreDistributionChart(evaluations) {
@@ -267,10 +231,7 @@ function createScoreDistributionChart(evaluations) {
                     }
                 }
             },
-            animation: {
-                duration: 2000,
-                easing: 'easeOutQuart'
-            }
+            animation: false
         }
     });
 }
@@ -321,10 +282,7 @@ function createQuestionPerformanceChart(evaluations) {
                     max: 10
                 }
             },
-            animation: {
-                duration: 2000,
-                easing: 'easeOutQuart'
-            }
+            animation: false
         }
     });
 }
@@ -363,10 +321,7 @@ function createStudentScoreChart(student) {
                     max: 10
                 }
             },
-            animation: {
-                duration: 1000,
-                easing: 'easeOutQuart'
-            }
+            animation: false
         }
     });
 }

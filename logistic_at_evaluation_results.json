@@ -1,0 +1,54 @@
+{
+  "hyperparameters": {
+    "alpha": 1.274671157821506,
+    "max_iter": 3000,
+    "verbose": 1
+  },
+  "train_metrics": {
+    "model_name": "Logistic AT",
+    "split": "Train",
+    "accuracy": 0.2836593785960875,
+    "mae": 1.1081703107019563,
+    "qwk": 0.8840017117006969,
+    "one_off_accuracy": 0.7203682393555811,
+    "perfect_predictions": 0.2836593785960875,
+    "large_errors": 0.08486766398158803,
+    "error_0": 0.2836593785960875,
+    "error_1": 0.43670886075949367,
+    "error_2": 0.19476409666283084,
+    "error_3plus": 0.08486766398158803
+  },
+  "validation_metrics": {
+    "model_name": "Logistic AT",
+    "split": "Validation",
+    "accuracy": 0.2962962962962963,
+    "mae": 1.1096296296296295,
+    "qwk": 0.8805737930647377,
+    "one_off_accuracy": 0.7155555555555555,
+    "perfect_predictions": 0.2962962962962963,
+    "large_errors": 0.08888888888888889,
+    "error_0": 0.2962962962962963,
+    "error_1": 0.4192592592592593,
+    "error_2": 0.19555555555555557,
+    "error_3plus": 0.08888888888888889
+  },
+  "test_metrics": {
+    "model_name": "Logistic AT",
+    "split": "Test",
+    "accuracy": 0.2785185185185185,
+    "mae": 1.0785185185185184,
+    "qwk": 0.893692233411505,
+    "one_off_accuracy": 0.7333333333333333,
+    "perfect_predictions": 0.2785185185185185,
+    "large_errors": 0.06962962962962962,
+    "error_0": 0.2785185185185185,
+    "error_1": 0.45481481481481484,
+    "error_2": 0.19703703703703704,
+    "error_3plus": 0.06962962962962962
+  },
+  "overfitting_assessment": "EXCELLENT (Minimal overfitting)",
+  "generalization_quality": "EXCELLENT",
+  "minority_class_performance": "EXCELLENT for minority classes",
+  "deployment_recommendation": "HIGHLY RECOMMENDED for deployment",
+  "reliability_score": "5/5"
+}

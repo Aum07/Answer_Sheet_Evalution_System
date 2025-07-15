@@ -253,35 +253,56 @@ def process_answer_sheet_data(df: pd.DataFrame) -> pd.DataFrame:
         axis=1
     )
     
+    # ✅ FIXED: Include ALL 10 features in correct order
     features = [
-        'Semantic Similarity', 'Length Ratio', 'question_student_similarity',
-        'POS_noun_ratio_diff', 'POS_similarity', 'flesch_kincaid_ratio'
+        'Semantic Similarity', 
+        'Length Ratio', 
+        'question_student_similarity',
+        'POS_noun_ratio_diff', 
+        'POS_similarity', 
+        'flesch_kincaid_ratio',
+        'POS_pos_diversity_diff',
+        'POS_verb_ratio_diff',
+        'POS_adv_ratio_diff',
+        'POS_adj_ratio_diff'
     ]
     
     return df[['ID', 'Question', 'Reference Answer', 'Student Answer'] + features]
 
+
 def predict_score(new_data: pd.DataFrame, model_path: str, scaler_path: str) -> np.ndarray:
     """Predict scores using the trained model."""
     try:
-        with open(model_path, 'rb') as f:
-            model = pickle.load(f)
+        # ✅ FIXED: Use joblib instead of pickle
+        import joblib
         
-        with open(scaler_path, 'rb') as f:
-            scaler = pickle.load(f)
+        model = joblib.load(model_path)
+        scaler = joblib.load(scaler_path)
         
+        # ✅ FIXED: Include ALL 10 features in correct order
         features = [
-            'Semantic Similarity', 'Length Ratio', 'question_student_similarity',
-            'POS_noun_ratio_diff', 'POS_similarity', 'flesch_kincaid_ratio'
+            'Semantic Similarity', 
+            'Length Ratio', 
+            'question_student_similarity',
+            'POS_noun_ratio_diff', 
+            'POS_similarity', 
+            'flesch_kincaid_ratio',
+            'POS_pos_diversity_diff',
+            'POS_verb_ratio_diff',
+            'POS_adv_ratio_diff',
+            'POS_adj_ratio_diff'
         ]
         
         X_scaled = scaler.transform(new_data[features])
         predictions = model.predict(X_scaled)
         
-        return np.clip(np.round(predictions), 0, 10).astype(int)
+        # ✅ FIXED: LogisticAT returns integers directly, no need to round
+        return predictions.astype(int)
     
     except Exception as e:
         logger.error(f"Error predicting scores: {str(e)}")
         raise ValueError(f"Failed to predict scores: {str(e)}")
+
 
 def main(reference_pdf_path: str, student_pdf_path: str, model_path: str, scaler_path: str) -> pd.DataFrame:
     """Main function to process PDFs and evaluate answers."""

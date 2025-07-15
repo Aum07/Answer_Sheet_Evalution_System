@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automated Subjective Answer Evaluation System Architecture</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+        
+        .title {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+        
+        .architecture {
+            display: flex;
+            justify-content: space-between;
+            align-items: stretch;
+            gap: 15px;
+            margin: 30px 0;
+            min-height: 500px;
+        }
+        
+        .stage {
+            flex: 1;
+            background: linear-gradient(145deg, #ffffff, #f8f9fa);
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+        
+        .stage:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .stage-number {
+            background: #3498db;
+            color: white;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin: 0 auto 15px;
+            font-size: 16px;
+        }
+        
+        .stage-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 14px;
+            line-height: 1.3;
+        }
+        
+        .stage-content {
+            font-size: 11px;
+            color: #5a6c7d;
+            line-height: 1.4;
+        }
+        
+        .tech-stack {
+            background: #e8f4fd;
+            border-radius: 6px;
+            padding: 8px;
+            margin: 10px 0;
+            font-weight: 600;
+            color: #2980b9;
+            font-size: 10px;
+        }
+        
+        .arrow {
+            position: absolute;
+            right: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-left: 15px solid #3498db;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            z-index: 10;
+        }
+        
+        .stage:last-child .arrow {
+            display: none;
+        }
+        
+        .metrics {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            border-left: 5px solid #27ae60;
+        }
+        
+        .metrics-title {
+            font-weight: bold;
+            color: #27ae60;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .metric-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .metric-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #27ae60;
+        }
+        
+        .metric-label {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+        
+        .api-endpoints {
+            background: #fff5f5;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            border-left: 5px solid #e74c3c;
+        }
+        
+        .api-title {
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .endpoint {
+            background: white;
+            padding: 10px 15px;
+            margin: 8px 0;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            border-left: 3px solid #e74c3c;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .feature-category {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #9b59b6;
+        }
+        
+        .feature-title {
+            font-weight: bold;
+            color: #9b59b6;
+            margin-bottom: 10px;
+        }
+        
+        .feature-list {
+            font-size: 11px;
+            color: #5a6c7d;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title">Automated Subjective Answer Evaluation System</div>
+        <div class="subtitle">End-to-End Architecture Pipeline for Academic Assessment</div>
+        
+        <div class="architecture">
+            <div class="stage">
+                <div class="stage-number">1</div>
+                <div class="stage-title">PDF Upload & Validation</div>
+                <div class="stage-content">
+                    • FastAPI file upload endpoint<br>
+                    • File size validation (10MB max)<br>
+                    • PDF format verification<br>
+                    • API key authentication<br>
+                    • Rate limiting (10 req/min)
+                </div>
+                <div class="tech-stack">FastAPI • Pydantic • Security</div>
+                <div class="arrow"></div>
+            </div>
+            
+            <div class="stage">
+                <div class="stage-number">2</div>
+                <div class="stage-title">Text Extraction & OCR</div>
+                <div class="stage-content">
+                    • PyMuPDF primary extraction<br>
+                    • Pytesseract OCR fallback<br>
+                    • Text cleaning & normalization<br>
+                    • Header/footer removal<br>
+                    • Multi-format support
+                </div>
+                <div class="tech-stack">PyMuPDF • Tesseract • PIL</div>
+                <div class="arrow"></div>
+            </div>
+            
+            <div class="stage">
+                <div class="stage-number">3</div>
+                <div class="stage-title">QA Pairing & Matching</div>
+                <div class="stage-content">
+                    • Regex pattern recognition<br>
+                    • Exact ID matching<br>
+                    • Fuzzy matching (>0.8 similarity)<br>
+                    • Question segmentation<br>
+                    • Answer alignment
+                </div>
+                <div class="tech-stack">Regex • difflib • Pandas</div>
+                <div class="arrow"></div>
+            </div>
+            
+            <div class="stage">
+                <div class="stage-number">4</div>
+                <div class="stage-title">Feature Engineering</div>
+                <div class="stage-content">
+                    • 10-dimensional feature extraction<br>
+                    • Semantic similarity (MPNET)<br>
+                    • Structural analysis (length, POS)<br>
+                    • Linguistic sophistication<br>
+                    • Readability metrics
+                </div>
+                <div class="tech-stack">SentenceTransformers • NLTK • TextStat</div>
+                <div class="arrow"></div>
+            </div>
+            
+            <div class="stage">
+                <div class="stage-number">5</div>
+                <div class="stage-title">Model Inference</div>
+                <div class="stage-content">
+                    • StandardScaler normalization<br>
+                    • LogisticAT ordinal classification<br>
+                    • Score prediction (0-10)<br>
+                    • Bias-aware evaluation<br>
+                    • Threshold optimization
+                </div>
+                <div class="tech-stack">Scikit-learn • Mord • Joblib</div>
+                <div class="arrow"></div>
+            </div>
+            
+            <div class="stage">
+                <div class="stage-number">6</div>
+                <div class="stage-title">Feedback Generation</div>
+                <div class="stage-content">
+                    • Score-based feedback bands<br>
+                    • Qualitative assessment<br>
+                    • Performance categorization<br>
+                    • Educational guidance<br>
+                    • Improvement suggestions
+                </div>
+                <div class="tech-stack">Rule-based Logic</div>
+                <div class="arrow"></div>
+            </div>
+            
+            <div class="stage">
+                <div class="stage-number">7</div>
+                <div class="stage-title">Report Generation</div>
+                <div class="stage-content">
+                    • Individual PDF reports<br>
+                    • Batch ZIP processing<br>
+                    • Summary statistics<br>
+                    • A4 print formatting<br>
+                    • Class analytics
+                </div>
+                <div class="tech-stack">ReportLab • ZIP • CSV</div>
+                <div class="arrow"></div>
+            </div>
+            
+            <div class="stage">
+                <div class="stage-number">8</div>
+                <div class="stage-title">Deployment & Caching</div>
+                <div class="stage-content">
+                    • Asynchronous processing<br>
+                    • In-memory result caching<br>
+                    • Background cleanup tasks<br>
+                    • Download endpoints<br>
+                    • Performance monitoring
+                </div>
+                <div class="tech-stack">AsyncIO • Cache • Logging</div>
+            </div>
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature-category">
+                <div class="feature-title">Semantic Features</div>
+                <div class="feature-list">
+                    • Student-Reference Embedding Similarity<br>
+                    • Question-Student Embedding Similarity<br>
+                    • Conceptual correctness measurement
+                </div>
+            </div>
+            
+            <div class="feature-category">
+                <div class="feature-title">Structural Features</div>
+                <div class="feature-list">
+                    • Length Ratio Analysis<br>
+                    • POS Similarity Measurement<br>
+                    • Grammatical structure comparison
+                </div>
+            </div>
+            
+            <div class="feature-category">
+                <div class="feature-title">Linguistic Features</div>
+                <div class="feature-list">
+                    • Noun/Verb/Adjective Ratio Differences<br>
+                    • POS Diversity Index<br>
+                    • Flesch-Kincaid Readability Ratio
+                </div>
+            </div>
+            
+            <div class="feature-category">
+                <div class="feature-title">Model Architecture</div>
+                <div class="feature-list">
+                    • LogisticAT Ordinal Classification<br>
+                    • Shared weight thresholds<br>
+                    • SMOTE-balanced training (4,500 samples)
+                </div>
+            </div>
+        </div>
+        
+        <div class="metrics">
+            <div class="metrics-title">System Performance Metrics</div>
+            <div class="metrics-grid">
+                <div class="metric-item">
+                    <div class="metric-value">0.894</div>
+                    <div class="metric-label">Quadratic Weighted Kappa</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value">94%</div>
+                    <div class="metric-label">One-off Accuracy</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value">0.896</div>
+                    <div class="metric-label">Human Correlation</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value">&lt;2%</div>
+                    <div class="metric-label">Extreme Error Rate</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value">2-3s</div>
+                    <div class="metric-label">Processing Time/Student</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value">4,500</div>
+                    <div class="metric-label">Training Samples</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="api-endpoints">
+            <div class="api-title">FastAPI Endpoints</div>
+            <div class="endpoint">POST /evaluate/ - Process multiple student answer sheets</div>
+            <div class="endpoint">GET /download/{request_id} - Download individual PDF report</div>
+            <div class="endpoint">GET /download-multiple/{request_id} - Download ZIP archive</div>
+            <div class="endpoint">GET /health/ - System health check and status</div>
+        </div>
+    </div>
+</body>
+</html>

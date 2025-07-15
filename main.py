@@ -32,8 +32,8 @@ logger = logging.getLogger("answer-sheet-api")
 # Configuration
 class Settings:
     # Fixed paths to use current directory
-    MODEL_PATH = "gradient_boost_model.pkl"
-    SCALER_PATH = "feature_scaler.pkl"
+    MODEL_PATH = "optimized_logistic_at_model.pkl"
+    SCALER_PATH = "scaler.pkl"
     MAX_UPLOAD_SIZE = int(os.getenv("MAX_UPLOAD_SIZE", 10 * 1024 * 1024))  # 10 MB
     RATE_LIMIT_PER_MINUTE = int(os.getenv("RATE_LIMIT_PER_MINUTE", 10))
     API_KEY = os.getenv("API_KEY", "")  # Set to empty string to disable API key auth
@@ -477,7 +477,7 @@ try:
 except RuntimeError:
     logger.warning("Static files directory not found, skipping static file serving")
 
-# if __name__ == "__main__":
-#     import uvicorn
-#     logger.info("Starting Answer Sheet Evaluation API")
-#     uvicorn.run(app, host="0.0.0.0", port=8000)
+if __name__ == "__main__":
+    import uvicorn
+    logger.info("Starting Answer Sheet Evaluation API")
+    uvicorn.run(app, host="0.0.0.0", port=8000)

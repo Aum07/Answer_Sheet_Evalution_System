@@ -1,0 +1,449 @@
+/* styles.css */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+}
+
+/* Hero Section */
+.hero {
+    padding: 100px 0;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 30px;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+}
+
+/* Animations */
+.animated {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+}
+
+.btn-pulse {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Feature Cards */
+.feature-card {
+    transition: all 0.3s ease;
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.feature-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #e9ecef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #0d6efd;
+    margin-right: 15px;
+    transition: all 0.3s ease;
+}
+
+.feature-item:hover .feature-icon {
+    background-color: #0d6efd;
+    color: white;
+    transform: rotate(360deg);
+}
+
+/* Dropzone */
+.dropzone {
+    min-height: 150px;
+    border: 2px dashed #0d6efd;
+    border-radius: 10px;
+    background: #f8f9fa;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dropzone:hover {
+    background-color: #e9ecef;
+    border-color: #0b5ed7;
+}
+
+.dropzone .dz-message {
+    font-weight: 500;
+    color: #6c757d;
+}
+
+.dropzone .dz-preview {
+    margin: 10px;
+}
+
+.dropzone .dz-preview .dz-image {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Student Answer and Feedback */
+.student-answer {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px;
+    border-left: 4px solid #0d6efd;
+    transition: all 0.3s ease;
+}
+
+.student-answer:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.feedback {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px;
+    border-left: 4px solid #28a745;
+    transition: all 0.3s ease;
+}
+
+.feedback:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Cards */
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.card:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+}
+
+.card-header {
+    border-bottom: none;
+    padding: 15px 20px;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+/* Icon Wrapper */
+.icon-wrapper {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #e9ecef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    transition: all 0.3s ease;
+}
+
+.icon-wrapper i {
+    color: #0d6efd;
+    transition: all 0.3s ease;
+}
+
+.card:hover .icon-wrapper {
+    background-color: #0d6efd;
+    transform: rotateY(180deg);
+}
+
+.card:hover .icon-wrapper i {
+    color: white;
+    transform: rotateY(180deg);
+}
+
+/* Process Flow */
+.process-flow {
+    position: relative;
+    padding: 20px 0;
+}
+
+.process-step {
+    display: flex;
+    margin-bottom: 30px;
+    position: relative;
+    z-index: 1;
+}
+
+.process-flow::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 20px;
+    width: 2px;
+    background-color: #e9ecef;
+    z-index: 0;
+}
+
+.step-number {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #0d6efd;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-right: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.step-content {
+    flex: 1;
+}
+
+/* Team Card */
+.team-card {
+    text-align: center;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.team-card:hover {
+    transform: translateY(-10px);
+}
+
+.team-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e9ecef;
+    color: #0d6efd;
+    transition: all 0.3s ease;
+}
+
+.team-card:hover .team-avatar {
+    background-color: #0d6efd;
+    color: white;
+    transform: scale(1.1);
+}
+
+/* Contact Section */
+.contact-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #e9ecef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.contact-item:hover .contact-icon {
+    background-color: #0d6efd;
+    transform: rotateY(180deg);
+}
+
+.contact-item:hover .contact-icon i {
+    color: white;
+    transform: rotateY(180deg);
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.social-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #e9ecef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0d6efd;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+    background-color: #0d6efd;
+    color: white;
+    transform: translateY(-5px);
+}
+
+/* Form Styling */
+.form-control {
+    border-radius: 10px;
+    padding: 12px 15px;
+    border: 1px solid #ced4da;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    border-color: #0d6efd;
+}
+
+.form-floating > .form-control {
+    padding: 1.5rem 1rem;
+}
+
+.btn {
+    border-radius: 10px;
+    padding: 10px 20px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.btn-primary:hover {
+    background-color: #0b5ed7;
+    border-color: #0a58ca;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(13, 110, 253, 0.3);
+}
+
+/* Document Animation */
+.document-animation {
+    width: 200px;
+    height: 250px;
+    position: relative;
+    margin: 0 auto;
+}
+
+.document {
+    width: 150px;
+    height: 200px;
+    background-color: white;
+    border-radius: 5px;
+    position: absolute;
+    top: 0;
+    left: 25px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    animation: float 3s ease-in-out infinite;
+}
+
+.document-line {
+    height: 10px;
+    background-color: #e9ecef;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.document-check {
+    width: 50px;
+    height: 50px;
+    background-color: #28a745;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+    animation: pulse 2s infinite;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+/* Section Title Animation */
+.section-title {
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 3px;
+    background-color: #0d6efd;
+    transition: width 1s ease;
+}
+
+.section-title.animated::after {
+    width: 100px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .hero {
+        padding: 60px 0;
+    }
+    
+    .process-flow::before {
+        left: 15px;
+    }
+    
+    .step-number {
+        width: 30px;
+        height: 30px;
+        font-size: 0.8rem;
+    }
+}
