@@ -2,6 +2,7 @@
 
 > **This project has been rebuilt. The current version is here:**
 > **[github.com/Aum07/ai-answer-sheet-grader](https://github.com/Aum07/ai-answer-sheet-grader)** · [Live demo](https://huggingface.co/spaces/Aum07/ai-answer-sheet-grader)
+> ▶ Try the live demo (free hosting, so the first load can take about a minute).
 
 This repository is the first version, built as my final-year BTech project at D Y Patil International University (2025). It grades free-text exam answers from PDFs using sentence embeddings and an ordinal regression model, served through FastAPI.
 
